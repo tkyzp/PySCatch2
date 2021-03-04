@@ -1,6 +1,8 @@
 
 import sys
 
+import webbrowser
+
 from PIL import ImageQt
 from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QDesktopWidget, QMessageBox, QSystemTrayIcon, \
     QMenu, QAction, QGraphicsOpacityEffect
@@ -103,7 +105,7 @@ class TaskBar(QSystemTrayIcon):
         self.setParent(app)
         self.scan = scan
         self.app = app
-        self.setToolTip("PySCatch2\n [F7] 扫描屏幕中的二维码\nGitHub:xxx")
+        self.setToolTip("PySCatch2\n [F7] 扫描屏幕中的二维码\nGitHub:https://github.com/tkyzp/PySCatch2")
         self.setIcon(QIcon("icon.png"))
         self.activated.connect(self.iconActivated)
         menu = QMenu()
@@ -111,11 +113,20 @@ class TaskBar(QSystemTrayIcon):
         self.scanAction.triggered.connect(self.scanEvent)
         self.exitAction = QAction("退出")
         self.exitAction.triggered.connect(self.exitEvent)
+        self.aboutAction = QAction("关于")
+        self.aboutAction.triggered.connect(self.aboutEvent)
         menu.addAction(self.scanAction)
+        menu.addAction(self.aboutAction)
         menu.addSeparator()
         menu.addAction(self.exitAction)
         self.setContextMenu(menu)
         self.show()
+
+    def aboutEvent(self):
+        try:
+            webbrowser.open("https://github.com/tkyzp/PySCatch2")
+        except:
+            QMessageBox(None, "关于", "By tkyzp\n 详见：https://github.com/tkyzp/PySCatch2")
 
     def scanEvent(self):
         self.scan.scan()
