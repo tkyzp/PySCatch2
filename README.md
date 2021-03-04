@@ -24,4 +24,4 @@
 
 使用PyQt5编写
 
-需要安装Python3， PyQt5， pyzbar
+需要安装Python3, PyQt5, pyzbar, system_hotkey
