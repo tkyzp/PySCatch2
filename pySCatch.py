@@ -1,6 +1,6 @@
 
 import sys
-
+from system_hotkey import SystemHotkey
 import webbrowser
 
 from PIL import ImageQt
@@ -14,7 +14,7 @@ import pyzbar.pyzbar as zbar
 
 
 class Scaner(QWidget):
-
+    hotkeysignal = pyqtSignal()
 
     def __init__(self):
         super(Scaner, self).__init__()
@@ -41,6 +41,14 @@ class Scaner(QWidget):
         op = QGraphicsOpacityEffect()
         op.setOpacity(0.4)
         self.fg.setGraphicsEffect(op)
+
+        self.hotkeysignal.connect(self.syshotkeyaction)
+        self.syskeysignal = SystemHotkey()
+        self.syskeysignal.register(('control', 'shift', 'q'), callback=lambda x: self.hotkeysignal.emit(), overwrite=True)
+
+
+    def syshotkeyaction(self):
+        self.scan()
 
 
     def scan(self):
@@ -105,7 +113,7 @@ class TaskBar(QSystemTrayIcon):
         self.setParent(app)
         self.scan = scan
         self.app = app
-        self.setToolTip("PySCatch2\n [F7] 扫描屏幕中的二维码\nGitHub:https://github.com/tkyzp/PySCatch2")
+        self.setToolTip("PySCatch2\n 快捷键: Ctrl+Shift+Q\nGitHub:https://github.com/tkyzp/PySCatch2")
         self.setIcon(QIcon("icon.png"))
         self.activated.connect(self.iconActivated)
         menu = QMenu()
