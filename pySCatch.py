@@ -105,7 +105,7 @@ class TaskBar(QSystemTrayIcon):
         self.setParent(app)
         self.scan = scan
         self.app = app
-        self.setToolTip("PySCatch2\n [F7] 扫描屏幕中的二维码\nGitHub:https://github.com/tkyzp/PySCatch2")
+        self.setToolTip("PySCatch2\n 点击扫描屏幕中的二维码\nGitHub:https://github.com/tkyzp/PySCatch2")
         self.setIcon(QIcon("icon.png"))
         self.activated.connect(self.iconActivated)
         menu = QMenu()
