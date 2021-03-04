@@ -142,7 +142,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     QApplication.setQuitOnLastWindowClosed(False)
     scaner = Scaner()
-    TaskBar(scaner, app)
+    taskbar = TaskBar(scaner, app)
+    taskbar.showMessage("通知", "点击系统托盘中的的图标即可扫描屏幕中的二维码", QIcon("icon.png"))
     app.exec_()
 
 
